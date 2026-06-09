@@ -1,22 +1,22 @@
-# Notification System Design
+# Stage 1
 
-## Logging Middleware
+## Priority Logic
 
-A reusable logging middleware has been implemented.
+Notifications are prioritized using:
 
-Function:
+Placement > Result > Event
 
-Log(stack, level, package, message)
+Weights:
+- Placement = 3
+- Result = 2
+- Event = 1
 
-The middleware sends logs to the AffordMed evaluation server using the protected Log API and supports:
-- debug
-- info
-- warn
-- error
-- fatal
+If two notifications have the same type,
+the newer notification gets higher priority.
 
-Supported stacks:
-- frontend
-- backend
+## Scalability
 
-Logs are used for monitoring, debugging and tracking application behavior.
+A priority queue / heap can be used to maintain
+the top N notifications efficiently as new
+notifications arrive without sorting the entire
+list every time.
